@@ -1,5 +1,6 @@
 package com.inflearn.toby.helloproject;
 
+import com.inflearn.toby.helloproject.restapi.HelloController;
 import org.apache.catalina.startup.Tomcat;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
@@ -25,6 +26,8 @@ public class HelloProjectApplication {
         // 추상화를 진행해서 다른 웹 서버를 사용할 수 있게 설정해야한다.
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
+            HelloController helloController = new HelloController();
+
             servletContext.addServlet("frontcontroller", new HttpServlet() {
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -32,9 +35,11 @@ public class HelloProjectApplication {
                     if(req.getRequestURI().equals("/hello")&&req.getMethod().equals(HttpMethod.GET.name())){
                         String name = req.getParameter("name");
 
+                        String ret = helloController.hello(name);
+
                         res.setStatus(HttpStatus.OK.value());
                         res.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
-                        res.getWriter().print("Hello Servlet" + name);
+                        res.getWriter().print(ret);
                     }
                     else if (req.getRequestURI().equals("/user")){}
                     else res.setStatus(HttpStatus.NOT_FOUND.value());
