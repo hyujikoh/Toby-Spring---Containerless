@@ -5,6 +5,9 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,9 +27,11 @@ public class HelloProjectApplication {
             servletContext.addServlet("hello", new HttpServlet() {
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-                    res.setStatus(200);
-                    res.setHeader("Content-Type","text/plain");
-                    res.getWriter().print("Hello Servlet");
+                    String name = req.getParameter("name");
+
+                    res.setStatus(HttpStatus.OK.value());
+                    res.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
+                    res.getWriter().print("Hello Servlet" + name);
                 }
             }).addMapping("/hello");
         });
