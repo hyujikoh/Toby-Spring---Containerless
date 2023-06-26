@@ -42,7 +42,7 @@ public class HelloProjectApplication {
     }
 
     public static void main(String[] args) {
-        // 익명 클래스
+        // 어노테이션 적용이 가능한 스프링 컨테이너 수정
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext(){
             @Override
             protected void onRefresh() {
@@ -61,7 +61,7 @@ public class HelloProjectApplication {
         };
         // 자바 코드로된 구성 정보를 등록하기 위해 구성정보 클래스 추가
         applicationContext.register(HelloProjectApplication.class);
-         applicationContext.refresh();
+        applicationContext.refresh();
 
 
     }
