@@ -33,6 +33,16 @@ import java.io.IOException;
 @ComponentScan
 public class HelloProjectApplication {
 
+    @Bean
+    public ServletWebServerFactory servletWebServerFactory(){
+        return new TomcatServletWebServerFactory();
+    }
+
+    @Bean
+    public DispatcherServlet dispatcherServlet(){
+        return new DispatcherServlet();
+    }
+
     public static void main(String[] args) {
         // 어노테이션 적용이 가능한 스프링 컨테이너 수정
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext(){
@@ -40,7 +50,9 @@ public class HelloProjectApplication {
             protected void onRefresh() {
                 super.onRefresh();
                 // 추상화를 진행해서 다른 웹 서버를 사용할 수 있게 설정해야한다.
-                ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+                ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
+                DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
+
                 WebServer webServer = serverFactory.getWebServer(servletContext -> {
 
                     servletContext.addServlet("dispatcherServlet",
