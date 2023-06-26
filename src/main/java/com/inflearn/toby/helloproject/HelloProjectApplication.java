@@ -1,6 +1,8 @@
 package com.inflearn.toby.helloproject;
 
 import com.inflearn.toby.helloproject.restapi.HelloController;
+import com.inflearn.toby.helloproject.restapi.HelloService;
+import com.inflearn.toby.helloproject.restapi.SimpleHelloService;
 import org.apache.catalina.startup.Tomcat;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
@@ -26,6 +28,7 @@ public class HelloProjectApplication {
     public static void main(String[] args) {
         GenericApplicationContext applicationContext = new GenericApplicationContext();
         applicationContext.registerBean(HelloController.class);
+        applicationContext.registerBean(SimpleHelloService.class);
         applicationContext.refresh();
 
         // 추상화를 진행해서 다른 웹 서버를 사용할 수 있게 설정해야한다.
