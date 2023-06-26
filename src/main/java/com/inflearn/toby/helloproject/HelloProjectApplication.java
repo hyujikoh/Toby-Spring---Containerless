@@ -28,21 +28,28 @@ import java.io.IOException;
 public class HelloProjectApplication {
 
     public static void main(String[] args) {
-        // 컨테이너 변경
-        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
+        // 익명 클래스
+        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext(){
+            @Override
+            protected void onRefresh() {
+                super.onRefresh();
+                // 추상화를 진행해서 다른 웹 서버를 사용할 수 있게 설정해야한다.
+                ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+                WebServer webServer = serverFactory.getWebServer(servletContext -> {
+
+                    servletContext.addServlet("dispatcherServlet",
+                            new DispatcherServlet(this)
+                    ).addMapping("/*"); // 해당 요청을 모두 처리하겠다.
+                });
+                webServer.start();
+
+            }
+        };
         applicationContext.registerBean(HelloController.class);
         applicationContext.registerBean(SimpleHelloService.class);
         applicationContext.refresh();
 
-        // 추상화를 진행해서 다른 웹 서버를 사용할 수 있게 설정해야한다.
-        ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        WebServer webServer = serverFactory.getWebServer(servletContext -> {
 
-            servletContext.addServlet("dispatcherServlet",
-                    new DispatcherServlet(applicationContext)
-                ).addMapping("/*"); // 해당 요청을 모두 처리하겠다.
-        });
-        webServer.start();
     }
 
 }
