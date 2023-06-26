@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,7 +28,8 @@ import java.io.IOException;
 public class HelloProjectApplication {
 
     public static void main(String[] args) {
-        GenericApplicationContext applicationContext = new GenericApplicationContext();
+        // 컨테이너 변경
+        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
         applicationContext.registerBean(HelloController.class);
         applicationContext.registerBean(SimpleHelloService.class);
         applicationContext.refresh();
@@ -35,23 +38,9 @@ public class HelloProjectApplication {
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
 
-            servletContext.addServlet("frontcontroller", new HttpServlet() {
-                @Override
-                protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-                    // 인증, 보안, 다국어, 공통 기능을 처리
-                    if(req.getRequestURI().equals("/hello")&&req.getMethod().equals(HttpMethod.GET.name())){
-                        String name = req.getParameter("name");
-
-                        HelloController helloController = applicationContext.getBean(HelloController.class);
-                        String ret = helloController.hello(name);
-
-                        res.setContentType(MediaType.TEXT_PLAIN_VALUE);
-                        res.getWriter().print(ret);
-                    }
-                    else if (req.getRequestURI().equals("/user")){}
-                    else res.setStatus(HttpStatus.NOT_FOUND.value());
-                }
-            }).addMapping("/*"); // 해당 요청을 모두 처리하겠다.
+            servletContext.addServlet("dispatcherServlet",
+                    new DispatcherServlet(applicationContext)
+                ).addMapping("/*"); // 해당 요청을 모두 처리하겠다.
         });
         webServer.start();
     }
