@@ -1,13 +1,11 @@
 package com.inflearn.toby.helloproject;
 
-import com.inflearn.toby.helloproject.restapi.MySpringApplication;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import static org.springframework.boot.SpringApplication.run;
@@ -15,7 +13,6 @@ import static org.springframework.boot.SpringApplication.run;
 @Configuration
 @ComponentScan
 public class HelloProjectApplication {
-
     @Bean
     public ServletWebServerFactory servletWebServerFactory(){
         return new TomcatServletWebServerFactory();
@@ -27,7 +24,7 @@ public class HelloProjectApplication {
     }
 
     public static void main(String[] args) {
-        MySpringApplication.run(HelloProjectApplication.class, args);
+        SpringApplication.run(HelloProjectApplication.class, args);
     }
 
 
