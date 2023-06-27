@@ -1,5 +1,6 @@
-package com.inflearn.toby.helloproject.restapi;
+package com.inflearn.toby.helloproject;
 
+import com.inflearn.toby.helloproject.restapi.HelloController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
