@@ -17,16 +17,16 @@ import java.util.Objects;
 public class HelloController{
     // final 을 사용할때 초기화를 해야한다.
     private final HelloService helloService;
-    private ApplicationContext applicationContext;
 
-    public HelloController(HelloService helloService, ApplicationContext applicationContext) {
+    public HelloController(HelloService helloService) {
         this.helloService = helloService;
-        this.applicationContext = applicationContext;
     }
 
 
     @GetMapping("/hello")
     public String hello(String name){
+        if(name == null || name.trim().length()==0) throw new IllegalArgumentException();
+
         // 객체에 대해 notnull 로 처리
         return helloService.sayHello(Objects.requireNonNull(name));
     }
