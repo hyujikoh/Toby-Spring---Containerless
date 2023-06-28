@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)// 클래스, 인터페이스, enum에게 어로테이션을 줄수있다.
 @Configuration
 @ComponentScan
-public @interface MySpringBootAnnotation {
+public @interface MySpringBootApplication {
 }
