@@ -1,4 +1,4 @@
-package com.inflearn.toby.helloproject.config;
+package com.inflearn.config;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
