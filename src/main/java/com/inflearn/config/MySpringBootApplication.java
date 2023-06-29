@@ -1,6 +1,8 @@
-package com.inflearn.toby.helloproject.annotation;
+package com.inflearn.config;
 
-import com.inflearn.config.Config;
+import com.inflearn.config.EnableMyAutoConfiguration;
+import com.inflearn.config.autoconfig.DispatcherServletConfig;
+import com.inflearn.config.autoconfig.TomcatWebServerConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -14,6 +16,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)// 클래스, 인터페이스, enum에게 어로테이션을 줄수있다.
 @Configuration
 @ComponentScan
-@Import(Config.class)
+@EnableMyAutoConfiguration
 public @interface MySpringBootApplication {
 }

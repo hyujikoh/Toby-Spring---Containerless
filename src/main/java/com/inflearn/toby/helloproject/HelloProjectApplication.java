@@ -1,6 +1,6 @@
 package com.inflearn.toby.helloproject;
 
-import com.inflearn.toby.helloproject.annotation.MySpringBootApplication;
+import com.inflearn.config.MySpringBootApplication;
 import org.springframework.boot.SpringApplication;
 
 import static org.springframework.boot.SpringApplication.run;
