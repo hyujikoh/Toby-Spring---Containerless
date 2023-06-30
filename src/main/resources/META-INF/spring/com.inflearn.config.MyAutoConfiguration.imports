@@ -1,0 +1,2 @@
+com.inflearn.config.autoconfig.TomcatWebServerConfig
+com.inflearn.config.autoconfig.DispatcherServletConfig
