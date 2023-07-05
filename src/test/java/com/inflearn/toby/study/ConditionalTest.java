@@ -7,29 +7,44 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class ConditionalTest {
 
     @Test
     void conditional(){
+        ApplicationContextRunner contextRunner = new ApplicationContextRunner();
+        contextRunner.withUserConfiguration(Config1.class)
+                .run(context ->{
+                    assertThat(context).hasSingleBean(MyBean.class);
+                    assertThat(context).hasSingleBean(Config1.class);
+                        });
 
-        // true
-        AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
-        ac.register(Config1.class);
-        ac.refresh();
+        new ApplicationContextRunner().withUserConfiguration(Config2.class)
+                .run(context ->{
+                    assertThat(context).doesNotHaveBean(MyBean.class);
+                    assertThat(context).doesNotHaveBean(Config2.class);
+                });
 
-        MyBean myBean = ac.getBean(MyBean.class);
-        //false
-        AnnotationConfigWebApplicationContext ac2 = new AnnotationConfigWebApplicationContext();
-        ac2.register(Config2.class);
-        ac2.refresh();
-
-        MyBean myBean2 = ac2.getBean(MyBean.class);
     }
 
-    @Configuration
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
     @Conditional(ConditionalTest.TrueCondition.class)
+    @interface TrueConditional{}
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    @Conditional(ConditionalTest.FalseCondition.class)
+    @interface FalseConditional{}
+
+    @Configuration
+    @TrueConditional
     static class Config1 {
         @Bean
         MyBean myBean(){
@@ -38,7 +53,7 @@ public class ConditionalTest {
     }
 
     @Configuration
-    @Conditional(ConditionalTest.FalseCondition.class)
+    @FalseConditional
     static class Config2 {
         @Bean
         MyBean myBean(){
