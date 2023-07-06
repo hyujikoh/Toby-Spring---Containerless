@@ -1,5 +1,9 @@
 package com.inflearn.config.autoconfig;
 
+import com.inflearn.config.MyConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@MyConfigurationProperties(prefix = "server")
 public class ServerProperties {
     private String contextPath;
 
