@@ -1,3 +1,4 @@
 com.inflearn.config.autoconfig.TomcatWebServerConfig
 com.inflearn.config.autoconfig.JettyWebServerConfig
 com.inflearn.config.autoconfig.DispatcherServletConfig
+com.inflearn.config.autoconfig.PropertyPlaceholderConfig
