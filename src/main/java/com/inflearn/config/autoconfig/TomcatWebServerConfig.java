@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.util.ClassUtils;
 
@@ -17,8 +18,10 @@ import org.springframework.util.ClassUtils;
 public class TomcatWebServerConfig {
     @Bean("tomcatWebServerFactory")
     @ConditionalOnMissingBean// 이거와 동일한 타입의 빈이 존재하지 않으면 이걸 빈으로 등록을 한다.
-    public ServletWebServerFactory servletWebServerFactory(){
-        return new TomcatServletWebServerFactory();
+    public ServletWebServerFactory servletWebServerFactory(Environment env){
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.setContextPath(env.getProperty("contextPath"));
+        return factory;
     }
 
 //    static class TomcatCondition implements Condition {
