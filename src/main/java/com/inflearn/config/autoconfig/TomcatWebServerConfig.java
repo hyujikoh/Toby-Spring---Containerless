@@ -1,19 +1,17 @@
 package com.inflearn.config.autoconfig;
 
 import com.inflearn.config.ConditionalMyOnClass;
+import com.inflearn.config.EnableMyConfigurationProperties;
 import com.inflearn.config.MyAutoConfiguration;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.catalina.Server;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
-import org.springframework.core.type.AnnotatedTypeMetadata;
-import org.springframework.util.ClassUtils;
+import org.springframework.context.annotation.Bean;
 
 @MyAutoConfiguration
 @ConditionalMyOnClass("org.apache.catalina.startup.Tomcat")
-@Import(ServerProperties.class)
+@EnableMyConfigurationProperties(ServerProperties.class)
 public class TomcatWebServerConfig {
 
     @Bean("tomcatWebServerFactory")
