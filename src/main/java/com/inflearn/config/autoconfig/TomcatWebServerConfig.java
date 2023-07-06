@@ -17,17 +17,19 @@ import org.springframework.util.ClassUtils;
 @MyAutoConfiguration
 @ConditionalMyOnClass("org.apache.catalina.startup.Tomcat")
 public class TomcatWebServerConfig {
-    @Value("${contextPath}")
-    String contextPath;
 
     @Bean("tomcatWebServerFactory")
     @ConditionalOnMissingBean// 이거와 동일한 타입의 빈이 존재하지 않으면 이걸 빈으로 등록을 한다.
-    public ServletWebServerFactory servletWebServerFactory(Environment env){
+    public ServletWebServerFactory servletWebServerFactory(ServerProperties properties){
+
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        System.out.println(this.contextPath);
-        factory.setContextPath(this.contextPath);
+
+        factory.setContextPath(properties.getContextPath());
+        factory.setPort(properties.getPort());
+
         return factory;
     }
+
 
 //    static class TomcatCondition implements Condition {
 //        @Override
