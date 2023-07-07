@@ -3,3 +3,5 @@ com.inflearn.config.autoconfig.JettyWebServerConfig
 com.inflearn.config.autoconfig.DispatcherServletConfig
 com.inflearn.config.autoconfig.PropertyPlaceholderConfig
 com.inflearn.config.autoconfig.PropertyPostProcessorConfig
+com.inflearn.config.autoconfig.DataSourceConfig
+
