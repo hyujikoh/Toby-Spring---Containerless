@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.annotation.PostConstruct;
+
 import static org.springframework.boot.SpringApplication.run;
 
 @MySpringBootApplication
@@ -15,6 +17,11 @@ public class HelloProjectApplication {
 
     public HelloProjectApplication(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @PostConstruct
+    void init(){
+        jdbcTemplate.execute("create table if not exists hello(name varchar(50) primary key, count int)");
     }
 
     @Bean

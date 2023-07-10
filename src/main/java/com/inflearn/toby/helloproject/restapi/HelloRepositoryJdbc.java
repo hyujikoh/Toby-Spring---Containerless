@@ -20,8 +20,7 @@ public class HelloRepositoryJdbc implements HelloRepository{
                             rs.getString("name"), rs.getInt("count")
                     ));
         }
-        catch (
-        EmptyResultDataAccessException e ){
+        catch (Exception e ){
             return null;
         }
 
@@ -31,6 +30,6 @@ public class HelloRepositoryJdbc implements HelloRepository{
     public void increaseCount(String name) {
         Hello hello = findHello(name);
         if (hello == null) jdbcTemplate.update("insert into hello values(?,?)", name, 1);
-        else jdbcTemplate.update("update hello set count =? where name = ?", hello.getCount(), name);
+        else jdbcTemplate.update("update hello set count =? where name = ?", hello.getCount()+1, name);
     }
 }

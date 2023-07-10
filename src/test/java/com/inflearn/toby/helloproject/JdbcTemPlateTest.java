@@ -10,15 +10,9 @@ import org.springframework.test.annotation.Rollback;
 import static org.assertj.core.api.Assertions.*;
 
 @HelloBootTest
-@Rollback(value = false)
 public class JdbcTemPlateTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
-
-    @BeforeEach
-    void init(){
-        jdbcTemplate.execute("create table if not exists hello(name varchar(50) primary key, count int)");
-    }
 
     @Test
     void insertAndQuery(){
