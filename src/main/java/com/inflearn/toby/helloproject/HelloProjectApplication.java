@@ -1,17 +1,15 @@
 package com.inflearn.toby.helloproject;
 
-import com.inflearn.config.MySpringBootApplication;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.PostConstruct;
 
-import static org.springframework.boot.SpringApplication.run;
-
-@MySpringBootApplication
+@SpringBootApplication
 public class HelloProjectApplication {
     private final JdbcTemplate jdbcTemplate;
 
