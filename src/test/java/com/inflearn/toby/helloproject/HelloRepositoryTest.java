@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE) // 우리가 테스트를 돌릴때는 굳이 웹환경을 셋팅할 필요는 없다
+@Transactional
 public class HelloRepositoryTest {
     @Autowired
     HelloRepository helloRepository;
